@@ -93,7 +93,7 @@ code{font-family:Consolas,Menlo,monospace;font-size:12.5px;background:#eef1f5;pa
     <button class="on" data-s="diario">Diario de avance</button>
     <button data-s="progreso">Avance</button>
     <button data-s="flujo">Flujo de trabajo</button>
-    <button data-s="equipo">Equipo</button>
+    <button data-s="integrantes">Equipo</button>
     <button data-s="coord">Coordinador 🔒</button>
   </nav>
 </div></header>
@@ -218,7 +218,7 @@ code{font-family:Consolas,Menlo,monospace;font-size:12.5px;background:#eef1f5;pa
 </section>
 
 <!-- ================= EQUIPO ================= -->
-<section id="equipo">
+<section id="integrantes">
   <div class="card">
     <h2>Equipo</h2>
     <p class="sub" id="eqlinks">Cargando…</p>
@@ -310,7 +310,7 @@ document.querySelectorAll('nav button').forEach(function(b){
     document.querySelectorAll('section').forEach(function(x){ x.classList.remove('on'); });
     b.classList.add('on'); $(b.dataset.s).classList.add('on');
     if (b.dataset.s === 'progreso') cargarAvance();
-    if (b.dataset.s === 'equipo') cargarEquipo();
+    if (b.dataset.s === 'integrantes') cargarEquipo();
   };
 });
 
