@@ -47,7 +47,7 @@ input:focus,select:focus,textarea:focus{outline:2px solid #9cc0e6;border-color:#
 .btn{background:var(--coord);color:#fff;border:0;font:inherit;font-weight:700;font-size:15px;padding:11px 20px;border-radius:9px;cursor:pointer}
 .btn.sec{background:#fff;color:var(--coord);border:1px solid var(--coord)}
 .btn.sm{font-size:13px;padding:7px 12px}
-.btn:disabled{opacity:.55;cursor:wait}
+.btn:disabled{opacity:.65;cursor:wait}.btn:disabled::before{content:'';display:inline-block;width:12px;height:12px;border:2px solid currentColor;border-top-color:transparent;border-radius:50%;margin-right:8px;vertical-align:-1px;animation:gira .8s linear infinite}@keyframes gira{to{transform:rotate(360deg)}}
 .msg{margin-top:14px;padding:12px 14px;border-radius:9px;font-size:14px;display:none}
 .msg.ok{display:block;background:#dff2ea;color:#14634f}.msg.err{display:block;background:#f8e3e3;color:#8a2a2a}.msg.info{display:block;background:#eaf1f8;color:#234a70}
 a{color:var(--coord)}
@@ -536,7 +536,7 @@ $('btnAdd').onclick = function(){
   var n = $('nNombre').value.trim();
   if (clave(n).split(' ').length < 2) return msg('msgAdd', 'Escribe nombre y apellido.', 'err');
   if (!$('nEquipo').value.trim()) return msg('msgAdd', 'Indica el equipo.', 'err');
-  this.disabled = true; var btn = this;
+  this.disabled = true; var btn = this; msg('msgAdd', 'Agregando y creando su carpeta en el Drive… unos segundos.', 'info');
   apiPost('agregarPersona', {nombre: n, equipo: $('nEquipo').value.trim(), rol: $('nRol').value.trim()}).then(function(r){
     msg('msgAdd', r.nuevo ? '<b>' + esc(r.nombre) + '</b> agregado. <a href="' + esc(r.carpeta) + '" target="_blank">Ver su carpeta</a>' : esc(r.nombre) + ' ya estaba en el equipo.', 'ok');
     $('nNombre').value = ''; $('nRol').value = ''; cargarInit(); cargarEquipo();
