@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>cloud point-QH · Quinta Heeren</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+<style>
+:root{--ink:#16202c;--muted:#5d6878;--line:#dde2ea;--bg:#f4f6f9;--card:#fff;--coord:#2f5d8a;--a:#1f8a70;--b:#c46a1b;--err:#b23a3a}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.45}
+header{background:var(--ink);color:#fff;padding:18px 24px 0}
+.wrap{max-width:1160px;margin:0 auto}
+.brand{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+.brand h1{margin:0;font-size:24px;letter-spacing:-.3px}
+.brand span{color:#aab4c3;font-size:14px}
+nav{display:flex;gap:4px;margin-top:14px;overflow-x:auto}
+nav button{background:none;border:0;color:#c9d1dc;font:inherit;font-size:14px;padding:10px 14px;border-radius:8px 8px 0 0;cursor:pointer;white-space:nowrap}
+nav button.on{background:var(--bg);color:var(--ink);font-weight:700}
+main{max-width:1160px;margin:0 auto;padding:22px 24px 60px}
+section{display:none}section.on{display:block}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:20px 22px;margin-bottom:16px}
+h2{font-size:18px;margin:0 0 4px}h3{font-size:15px;margin:0 0 10px}
+.sub{color:var(--muted);font-size:14px;margin:0 0 16px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px 18px}
+.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px 18px}
+.full{grid-column:1/-1}
+label{display:block;font-size:13px;font-weight:700;margin-bottom:5px}
+label small{font-weight:400;color:var(--muted)}
+input[type=text],input[type=date],input[type=url],input[type=password],input[type=number],select,textarea{width:100%;font:inherit;font-size:14px;padding:9px 11px;border:1px solid #c8cfd9;border-radius:8px;background:#fff}
+textarea{min-height:60px;resize:vertical}
+input:focus,select:focus,textarea:focus{outline:2px solid #9cc0e6;border-color:#6a9bd0}
+.drop{border:2px dashed #b9c3d0;border-radius:10px;padding:14px;text-align:center;background:#fafbfc;cursor:pointer;font-size:14px;color:var(--muted)}
+.drop.over{border-color:var(--coord);background:#eef4fb}
+.drop input{display:none}
+.hint{font-size:12.5px;color:var(--muted);margin-top:5px}
+.tag{display:inline-block;font-size:12px;font-weight:700;padding:2px 9px;border-radius:20px;margin-top:6px}
+.tag.new{background:#fdf0dc;color:#8a4c10}.tag.old{background:#dff2ea;color:#14634f}
+.range{display:flex;align-items:center;gap:12px}
+.range input{flex:1;accent-color:var(--coord)}
+.range b{min-width:52px;text-align:right;font-size:18px}
+.files{margin-top:8px;font-size:13px}
+.frow{display:flex;justify-content:space-between;gap:10px;padding:6px 0;border-bottom:1px solid #eef1f5}
+.bar{height:5px;background:#e6eaf0;border-radius:3px;margin-top:4px;overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:var(--coord);transition:width .2s}
+.prev{max-height:140px;border-radius:8px;margin-top:8px;display:none;border:1px solid var(--line)}
+.btn{background:var(--coord);color:#fff;border:0;font:inherit;font-weight:700;font-size:15px;padding:11px 20px;border-radius:9px;cursor:pointer}
+.btn.sec{background:#fff;color:var(--coord);border:1px solid var(--coord)}
+.btn.sm{font-size:13px;padding:7px 12px}
+.btn:disabled{opacity:.55;cursor:wait}
+.msg{margin-top:14px;padding:12px 14px;border-radius:9px;font-size:14px;display:none}
+.msg.ok{display:block;background:#dff2ea;color:#14634f}.msg.err{display:block;background:#f8e3e3;color:#8a2a2a}.msg.info{display:block;background:#eaf1f8;color:#234a70}
+a{color:var(--coord)}
+table{width:100%;border-collapse:collapse;font-size:13.5px}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:middle}
+th{background:#eef1f5;font-size:12.5px}
+code{font-family:Consolas,Menlo,monospace;font-size:12.5px;background:#eef1f5;padding:1px 5px;border-radius:4px}
+/* KPIs */
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:16px}
+.kpi{background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+.kpi b{display:block;font-size:28px;letter-spacing:-.5px}
+.kpi span{font-size:12.5px;color:var(--muted)}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+.chip{border:1px solid var(--line);background:#fff;border-radius:20px;padding:6px 13px;font:inherit;font-size:13px;cursor:pointer}
+.chip.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.matrix td.c{text-align:center;font-size:12px;min-width:84px;border-left:2px solid #fff}
+.matrix td.c b{display:block;font-size:13px}
+.matrix td.c small{opacity:.8}
+.pbar{height:8px;background:#e6eaf0;border-radius:4px;overflow:hidden;min-width:90px}
+.pbar i{display:block;height:100%;background:var(--a)}
+.day{border-left:3px solid var(--coord);padding:4px 0 4px 14px;margin:0 0 14px}
+.day h4{margin:0 0 6px;font-size:14px}
+.day div{font-size:13.5px;padding:3px 0}
+.pill{display:inline-block;font-size:11.5px;font-weight:700;border-radius:20px;padding:1px 8px;color:#fff;margin-right:4px}
+/* flujo */
+.flow{display:grid;gap:10px;margin:6px 0 4px}
+.st{position:relative;background:#fff;border:1px solid var(--line);border-top:5px solid var(--c);border-radius:10px;padding:12px}
+.st .n{font-size:11px;font-weight:800;color:var(--c)}
+.st .t{font-weight:700;font-size:14px;margin:2px 0 6px}
+.st .w{font-size:12.5px;color:var(--muted)}
+.st .w b{color:var(--ink);font-weight:600}
+.edit td{padding:4px}
+.edit input[type=text]{padding:6px 8px;font-size:13px}
+.lock{max-width:420px}
+.hidden{display:none}
+@media(max-width:860px){.grid,.g3{grid-template-columns:1fr}.kpis{grid-template-columns:1fr 1fr}.flow{grid-template-columns:1fr 1fr!important}}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+  <div class="brand"><h1>cloud point-QH</h1><span>Quinta Heeren · Nube de puntos → ortofotos georreferenciadas</span></div>
+  <nav>
+    <button class="on" data-s="diario">Diario de avance</button>
+    <button data-s="avance">Avance</button>
+    <button data-s="flujo">Flujo de trabajo</button>
+    <button data-s="equipo">Equipo</button>
+    <button data-s="coord">Coordinador 🔒</button>
+  </nav>
+</div></header>
+
+<main>
+<!-- ================= DIARIO ================= -->
+<section id="diario" class="on">
+  <div class="card">
+    <h2>Diario de avance</h2>
+    <p class="sub">Registra lo que avanzaste hoy. Se anota solo en la hoja de control del Drive y tu foto queda guardada en tu carpeta.</p>
+    <form id="f" autocomplete="off">
+      <div class="grid">
+        <div>
+          <label>Nombre y apellido</label>
+          <input type="text" id="nombre" list="lnombres" placeholder="Ej. Favio Arrese" required>
+          <datalist id="lnombres"></datalist>
+          <div id="ntag"></div>
+        </div>
+        <div>
+          <label>Equipo</label>
+          <input type="text" id="equipo" list="lequipos" placeholder="Elige o escribe tu equipo" required>
+          <datalist id="lequipos"></datalist>
+        </div>
+        <div>
+          <label>Fecha</label>
+          <input type="date" id="fecha" required>
+        </div>
+        <div>
+          <label>Etapa</label>
+          <select id="etapa" required></select>
+        </div>
+        <div>
+          <label>Bloque / zona</label>
+          <input type="text" id="bloque" list="lbloques" placeholder="Ej. B4" required>
+          <datalist id="lbloques"></datalist>
+        </div>
+        <div>
+          <label>Corte</label>
+          <input type="text" id="corte" list="lcortes" placeholder="Ej. A" required>
+          <datalist id="lcortes"></datalist>
+        </div>
+        <div class="full">
+          <label>% de avance de esta etapa en este corte</label>
+          <div class="range"><input type="range" id="avance" min="0" max="100" step="5" value="50"><b id="avv">50%</b></div>
+        </div>
+        <div class="full">
+          <label>Descripción breve <small>(qué hiciste)</small></label>
+          <textarea id="desc" placeholder="Ej. Limpieza de vegetación y personas en el corte C del bloque B4."></textarea>
+        </div>
+        <div class="full">
+          <label>Foto de avance <small>(captura de pantalla de CloudCompare / ReCap)</small></label>
+          <div class="drop" id="dropF"><input type="file" id="foto" accept="image/*">Arrastra aquí o <b>haz clic para elegir la foto</b></div>
+          <img id="prev" class="prev" alt="">
+        </div>
+        <div class="full">
+          <label>Archivo procesado <small>(opcional: ortofoto, .las limpio… se guarda en tu carpeta con nombre normado)</small></label>
+          <div class="drop" id="dropA"><input type="file" id="archivos" multiple>Arrastra aquí o <b>haz clic para elegir archivos</b></div>
+          <div class="files" id="lista"></div>
+        </div>
+        <div class="full">
+          <label>Link <small>(opcional: si el archivo ya está en el Drive)</small></label>
+          <input type="url" id="link" placeholder="https://drive.google.com/...">
+        </div>
+      </div>
+      <div style="margin-top:18px"><button class="btn" id="enviar" type="submit">Enviar registro</button></div>
+      <div class="msg" id="msg"></div>
+    </form>
+  </div>
+</section>
+
+<!-- ================= AVANCE ================= -->
+<section id="avance">
+  <div class="kpis">
+    <div class="kpi"><b id="kGlobal">–</b><span>Avance global</span></div>
+    <div class="kpi"><b id="kCortes">–</b><span>Cortes terminados</span></div>
+    <div class="kpi"><b id="kReg">–</b><span>Registros en el diario</span></div>
+    <div class="kpi"><b id="kUlt">–</b><span>Último registro</span></div>
+  </div>
+  <div class="card">
+    <h2>Avance global por día</h2>
+    <p class="sub">Pasa el cursor sobre cada día para ver quién avanzó, en qué corte y cuánto.</p>
+    <div style="height:280px"><canvas id="chLinea"></canvas></div>
+  </div>
+  <div class="card">
+    <h2>Avance por bloque y corte</h2>
+    <p class="sub">Cada barra es un corte; el color muestra cuánto se ha avanzado en cada etapa.</p>
+    <div class="chips" id="chipsB"></div>
+    <div id="chBarWrap" style="height:360px"><canvas id="chBar"></canvas></div>
+    <div style="overflow-x:auto;margin-top:16px"><table class="matrix" id="matriz"></table></div>
+  </div>
+  <div class="card">
+    <h2>Bitácora: días y encargados</h2>
+    <div id="bitacora"></div>
+  </div>
+</section>
+
+<!-- ================= FLUJO ================= -->
+<section id="flujo">
+  <div class="card">
+    <h2>Flujo de trabajo</h2>
+    <p class="sub">El coordinador lo puede editar desde la pestaña Coordinador. Nuestro alcance termina en la ortofoto georreferenciada a escala real.</p>
+    <div class="flow" id="flow"></div>
+  </div>
+  <div class="grid">
+    <div class="card">
+      <h3>Cómo trabajamos</h3>
+      <table>
+        <tr><td><b>1</b></td><td>El coordinador sube la nube en bruto (.las) al Drive desde esta web.</td></tr>
+        <tr><td><b>2</b></td><td>Cada uno la descarga desde el Drive, la procesa en su PC (CloudCompare / ReCap) y registra su avance aquí.</td></tr>
+        <tr><td><b>3</b></td><td>Todo se ordena solo en la hoja de control del Drive: por persona, bloque, corte y etapa.</td></tr>
+        <tr><td><b>4</b></td><td>Al final se entrega el Drive completo (sin la web).</td></tr>
+      </table>
+    </div>
+    <div class="card">
+      <h3>Cómo se guardan los archivos</h3>
+      <p style="margin:0 0 8px;font-size:13.5px">La web los renombra sola al subirlos:</p>
+      <code style="display:block;padding:10px;white-space:normal">QH_[BLOQUE]_C-[CORTE]_[ETAPA]_[AAAAMMDD]_[NombreApellido]_[archivo]</code>
+      <p class="hint">Ejemplo: <code>QH_B4_C-C_ORT_20261105_RodrigoPerez_ortofoto.tif</code>. Si el archivo ya empieza con <code>QH_</code>, se respeta.</p>
+      <p class="hint">Ruta: <code>03_EQUIPO / Nombre Apellido / 05_ORTOFOTO_GEORREFERENCIADA / B4</code></p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= EQUIPO ================= -->
+<section id="equipo">
+  <div class="card">
+    <h2>Equipo</h2>
+    <p class="sub" id="eqlinks">Cargando…</p>
+    <div style="overflow-x:auto"><table id="teq"></table></div>
+  </div>
+  <div class="card">
+    <h2>Agregar integrante</h2>
+    <p class="sub">Se crea su carpeta personal en el Drive y su pestaña en la hoja de control.</p>
+    <div class="g3">
+      <div><label>Nombre y apellido</label><input type="text" id="nNombre" placeholder="Ej. Ana Torres"></div>
+      <div><label>Equipo</label><input type="text" id="nEquipo" list="lequipos" placeholder="Elige o escribe"></div>
+      <div><label>Rol <small>(opcional)</small></label><input type="text" id="nRol" placeholder="Ej. Limpieza"></div>
+    </div>
+    <div style="margin-top:14px"><button class="btn" id="btnAdd">Agregar al equipo</button></div>
+    <div class="msg" id="msgAdd"></div>
+  </div>
+</section>
+
+<!-- ================= COORDINADOR ================= -->
+<section id="coord">
+  <div class="card lock" id="lockBox">
+    <h2>Acceso del coordinador</h2>
+    <p class="sub">Para cargar la nube en bruto, definir cortes y editar el flujo.</p>
+    <label>Contraseña</label>
+    <input type="password" id="clave" placeholder="••••••">
+    <div style="margin-top:12px"><button class="btn" id="btnClave">Entrar</button></div>
+    <div class="msg" id="msgClave"></div>
+  </div>
+  <div id="admin" class="hidden">
+    <div class="card">
+      <h2>Cargar nube en bruto (.las / .laz / .e57)</h2>
+      <p class="sub">Va a <code>02_NUBE_POR_BLOQUES / Bloque / NUBE</code>, o a <code>CORTES_BRUTO / Corte X</code> si indicas un corte. El equipo la descarga desde el Drive.</p>
+      <div class="grid">
+        <div><label>Bloque / zona</label><input type="text" id="bBloque" list="lbloques" placeholder="Ej. B4"></div>
+        <div><label>Corte <small>(opcional)</small></label><input type="text" id="bCorte" placeholder="Ej. A"></div>
+        <div class="full"><div class="drop" id="dropB"><input type="file" id="brutos" multiple accept=".las,.laz,.e57,.bin,.rcp,.rcs,.pts,.xyz">Arrastra aquí o <b>haz clic para elegir los archivos en bruto</b></div><div class="files" id="listaB"></div></div>
+      </div>
+      <div style="margin-top:14px"><button class="btn" id="btnBruto">Subir al Drive</button></div>
+      <div class="msg" id="msgB"></div>
+    </div>
+    <div class="card">
+      <h2>Plan de cortes por bloque</h2>
+      <p class="sub">Ej. bloque B4 con 18 cortes → Corte A a Corte R. También puedes escribir una lista (A, B, C1, C2…).</p>
+      <div class="g3">
+        <div><label>Bloque / zona</label><input type="text" id="cBloque" list="lbloques" placeholder="Ej. B4"></div>
+        <div><label>Cantidad de cortes</label><input type="number" id="cCant" min="1" max="200" placeholder="Ej. 18"></div>
+        <div><label>…o lista de cortes</label><input type="text" id="cLista" placeholder="A, B, C1, C2"></div>
+      </div>
+      <div style="margin-top:14px"><button class="btn" id="btnCortes">Guardar cortes</button></div>
+      <div class="msg" id="msgC"></div>
+      <div id="resCortes" class="hint" style="margin-top:10px"></div>
+    </div>
+    <div class="card">
+      <h2>Editar flujo de trabajo</h2>
+      <p class="sub">Agrega, quita o reordena etapas. "Mide avance" indica si la etapa cuenta para las gráficas. Las carpetas de etapas nuevas se crean solas.</p>
+      <div style="overflow-x:auto"><table class="edit" id="tFlujo"></table></div>
+      <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap">
+        <button class="btn sec sm" id="btnFila">+ Agregar etapa</button>
+        <button class="btn" id="btnFlujo">Guardar flujo</button>
+      </div>
+      <div class="msg" id="msgF"></div>
+    </div>
+  </div>
+</section>
+</main>
+
+<script>
+var API = 'https://script.google.com/macros/s/AKfycbzOTaTgywul6rEDl5TT7EyPS20i90Uvra5OCJ5Yv1zYFbQMsz30ODmoRpOfzBQLGAkM/exec';
+var CHUNK = 8 * 1024 * 1024;
+var COLORES = ['#2f5d8a','#1f8a70','#c46a1b','#8a3b5c','#6b5bd2','#3a9bb5','#b23a3a','#7a7f88'];
+var INIT = {personas:[], equipos:[], flujo:[], bloques:[], cortes:{}};
+var CLAVE = '';
+
+function $(id){ return document.getElementById(id); }
+function esc(s){ return String(s == null ? '' : s).replace(/[&<>"]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
+function clave(s){ return String(s||'').replace(/\s+/g,' ').trim().toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,''); }
+function mb(n){ return (n/1048576).toFixed(n > 10485760 ? 0 : 1) + ' MB'; }
+function msg(id, t, cls){ var m = $(id); m.className = 'msg ' + cls; m.innerHTML = t; }
+function unwrap(j){ if (!j.ok) throw new Error(j.error || 'Error'); return j.data; }
+function apiGet(a){ return fetch(API + '?api=' + a).then(function(r){ return r.json(); }).then(unwrap); }
+function apiPost(action, data){ return fetch(API, {method:'POST', body: JSON.stringify(Object.assign({action: action}, data || {}))}).then(function(r){ return r.json(); }).then(unwrap); }
+function medibles(){ return INIT.flujo.filter(function(e){ return e.mide; }); }
+function fechaBonita(f){ if (!f) return ''; var p = f.split('-'); return p[2] + '/' + p[1] + '/' + p[0]; }
+
+/* ---------- pestañas ---------- */
+document.querySelectorAll('nav button').forEach(function(b){
+  b.onclick = function(){
+    document.querySelectorAll('nav button').forEach(function(x){ x.classList.remove('on'); });
+    document.querySelectorAll('section').forEach(function(x){ x.classList.remove('on'); });
+    b.classList.add('on'); $(b.dataset.s).classList.add('on');
+    if (b.dataset.s === 'avance') cargarAvance();
+    if (b.dataset.s === 'equipo') cargarEquipo();
+  };
+});
+
+/* ---------- inicio ---------- */
+var hoy = new Date(); hoy.setMinutes(hoy.getMinutes() - hoy.getTimezoneOffset());
+$('fecha').value = hoy.toISOString().slice(0,10);
+$('avance').oninput = function(){ $('avv').textContent = this.value + '%'; };
+function cargarInit(){
+  return apiGet('init').then(function(d){ INIT = d; poblar(); }).catch(function(e){ msg('msg', 'No se pudo conectar con el Drive: ' + esc(e.message), 'err'); });
+}
+cargarInit();
+function poblar(){
+  $('lnombres').innerHTML = INIT.personas.map(function(p){ return '<option value="' + esc(p.nombre) + '">'; }).join('');
+  $('lequipos').innerHTML = INIT.equipos.map(function(e){ return '<option value="' + esc(e) + '">'; }).join('');
+  $('lbloques').innerHTML = INIT.bloques.map(function(b){ return '<option value="' + esc(b) + '">'; }).join('');
+  var sel = $('etapa').value;
+  $('etapa').innerHTML = INIT.flujo.filter(function(e){ return e.mide; }).map(function(e){ return '<option>' + esc(e.etapa) + '</option>'; }).join('');
+  if (sel) $('etapa').value = sel;
+  cortesDe();
+  pintarFlujo();
+  pintarEditorFlujo();
+}
+function normB(b){ var x = String(b||'').toUpperCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/^BLOQUE\s*/,'B').replace(/[^A-Z0-9-]/g,''); return /^\d+$/.test(x) ? 'B' + x : x; }
+function cortesDe(){
+  var lista = INIT.cortes[normB($('bloque').value)] || [];
+  $('lcortes').innerHTML = lista.map(function(c){ return '<option value="' + esc(c) + '">'; }).join('');
+}
+$('bloque').addEventListener('input', cortesDe);
+$('nombre').addEventListener('change', revisarNombre);
+$('nombre').addEventListener('blur', revisarNombre);
+function revisarNombre(){
+  var k = clave($('nombre').value);
+  if (!k) { $('ntag').innerHTML = ''; return; }
+  var p = INIT.personas.filter(function(x){ return clave(x.nombre) === k; })[0];
+  if (p) { $('ntag').innerHTML = '<span class="tag old">Integrante registrado</span>'; $('equipo').value = p.equipo; }
+  else if (k.split(' ').length < 2) $('ntag').innerHTML = '<span class="tag new">Escribe nombre y apellido</span>';
+  else $('ntag').innerHTML = '<span class="tag new">Nuevo integrante: se creará su carpeta automáticamente</span>';
+}
+
+/* ---------- zonas de archivos ---------- */
+function zona(dropId, inputId, onFiles){
+  var d = $(dropId), i = $(inputId);
+  d.onclick = function(){ i.click(); };
+  i.onchange = function(){ onFiles(i.files); i.value = ''; };
+  d.ondragover = function(e){ e.preventDefault(); d.classList.add('over'); };
+  d.ondragleave = function(){ d.classList.remove('over'); };
+  d.ondrop = function(e){ e.preventDefault(); d.classList.remove('over'); onFiles(e.dataTransfer.files); };
+}
+function pintarLista(arr, cont, pref){
+  $(cont).innerHTML = arr.map(function(f, i){
+    return '<div class="frow"><div style="flex:1">' + esc(f.name) + ' <span class="hint">(' + mb(f.size) + ')</span><div class="bar"><i id="' + pref + i + '"></i></div></div><a href="#" data-i="' + i + '">quitar</a></div>';
+  }).join('');
+  $(cont).querySelectorAll('a').forEach(function(a){ a.onclick = function(e){ e.preventDefault(); arr.splice(+a.dataset.i, 1); pintarLista(arr, cont, pref); }; });
+}
+var ARCH = [], FOTO = null, BRUTOS = [];
+zona('dropA', 'archivos', function(fl){ for (var i = 0; i < fl.length; i++) ARCH.push(fl[i]); pintarLista(ARCH, 'lista', 'a'); });
+zona('dropB', 'brutos', function(fl){ for (var i = 0; i < fl.length; i++) BRUTOS.push(fl[i]); pintarLista(BRUTOS, 'listaB', 'r'); });
+zona('dropF', 'foto', function(fl){ if (!fl.length) return; FOTO = fl[0]; var p = $('prev'); p.src = URL.createObjectURL(FOTO); p.style.display = 'block'; });
+
+/* ---------- subida reanudable directa al Drive ---------- */
+function xhrPut(url, blob, a, b, total, onp){
+  return new Promise(function(ok, ko){
+    var x = new XMLHttpRequest();
+    x.open('PUT', url, true);
+    x.setRequestHeader('Content-Range', 'bytes ' + a + '-' + b + '/' + total);
+    x.upload.onprogress = function(e){ if (e.lengthComputable) onp(e.loaded); };
+    x.onload = function(){ ok({status: x.status, text: x.responseText}); };
+    x.onerror = function(){ ko(new Error('red')); };
+    x.send(blob);
+  });
+}
+async function putChunks(url, file, prog){
+  var start = 0, intentos = 0;
+  while (start < file.size) {
+    var end = Math.min(start + CHUNK, file.size), s0 = start, r;
+    try { r = await xhrPut(url, file.slice(start, end), start, end - 1, file.size, function(l){ prog((s0 + l) / file.size); }); }
+    catch (e) { if (++intentos > 4) throw e; await new Promise(function(z){ setTimeout(z, 2000 * intentos); }); continue; }
+    if (r.status === 200 || r.status === 201) return JSON.parse(r.text);
+    if (r.status !== 308) throw new Error('HTTP ' + r.status);
+    intentos = 0; start = end;
+  }
+  throw new Error('Subida incompleta');
+}
+function toB64(file){ return new Promise(function(ok, ko){ var r = new FileReader(); r.onload = function(){ ok(String(r.result).split(',')[1]); }; r.onerror = ko; r.readAsDataURL(file); }); }
+async function subir(file, base, bar, accion){
+  var meta = Object.assign({}, base, {archivo: file.name, mime: file.type || 'application/octet-stream', size: file.size, origin: location.origin});
+  try {
+    var s = await apiPost(accion, meta);
+    var info = await putChunks(s.url, file, function(p){ bar.style.width = Math.round(p * 100) + '%'; });
+    bar.style.width = '100%';
+    return {nombre: info.name || s.nombre, url: 'https://drive.google.com/file/d/' + info.id + '/view'};
+  } catch (e) {
+    if (accion === 'iniciarSubida' && file.size <= 20 * 1048576) {
+      bar.style.width = '40%';
+      var r = await apiPost('subirDirecto', Object.assign(meta, {b64: await toB64(file)}));
+      bar.style.width = '100%';
+      return r;
+    }
+    throw new Error('No se pudo subir "' + file.name + '": ' + e.message);
+  }
+}
+
+/* ---------- foto ---------- */
+function dibujar(img, max, q){ var s = Math.min(1, max / Math.max(img.width, img.height)); var c = document.createElement('canvas'); c.width = Math.round(img.width * s); c.height = Math.round(img.height * s); c.getContext('2d').drawImage(img, 0, 0, c.width, c.height); return c.toDataURL('image/jpeg', q); }
+function prepararFoto(file){
+  return new Promise(function(ok, ko){
+    var img = new Image();
+    img.onload = function(){ ok({b64: dibujar(img, 2000, 0.82).split(',')[1], thumb: dibujar(img, 420, 0.7)}); };
+    img.onerror = function(){ ko(new Error('La foto no se pudo leer. Usa JPG o PNG.')); };
+    img.src = URL.createObjectURL(file);
+  });
+}
+
+/* ---------- enviar diario ---------- */
+$('f').onsubmit = async function(e){
+  e.preventDefault();
+  var nombre = $('nombre').value.trim();
+  if (clave(nombre).split(' ').length < 2) return msg('msg', 'Escribe tu <b>nombre y apellido</b>.', 'err');
+  if (!FOTO) return msg('msg', 'Agrega una <b>foto de avance</b>.', 'err');
+  var base = {nombre: nombre, equipo: $('equipo').value.trim(), fecha: $('fecha').value, bloque: $('bloque').value, corte: $('corte').value, etapa: $('etapa').value};
+  $('enviar').disabled = true;
+  try {
+    var subidos = [];
+    for (var i = 0; i < ARCH.length; i++) {
+      msg('msg', 'Subiendo ' + (i + 1) + ' de ' + ARCH.length + ': ' + esc(ARCH[i].name) + '…', 'info');
+      subidos.push(await subir(ARCH[i], base, $('a' + i), 'iniciarSubida'));
+    }
+    msg('msg', 'Guardando registro…', 'info');
+    var r = await apiPost('registrar', Object.assign({}, base, {descripcion: $('desc').value, avance: $('avance').value, link: $('link').value.trim(), archivos: subidos, foto: await prepararFoto(FOTO)}));
+    msg('msg', '<b>Listo: registro ' + esc(r.id) + '.</b> ' + (r.nuevo ? 'Se creó tu carpeta personal. ' : '') + '<a href="' + esc(r.carpeta) + '" target="_blank">Abrir mi carpeta</a>', 'ok');
+    ARCH = []; pintarLista(ARCH, 'lista', 'a'); FOTO = null; $('prev').style.display = 'none'; $('desc').value = ''; $('link').value = '';
+    await cargarInit(); $('nombre').value = r.nombre; revisarNombre();
+  } catch (err) { msg('msg', esc(err.message || err), 'err'); }
+  $('enviar').disabled = false;
+};
+
+/* ---------- avance ---------- */
+var AV = null, BSEL = null, chLinea = null, chBar = null;
+function colorEtapa(i){ return COLORES[i % COLORES.length]; }
+function cargarAvance(){
+  apiGet('avance').then(function(d){ AV = d; if (!BSEL || !d.bloques.some(function(b){ return b.bloque === BSEL; })) BSEL = d.bloques.length ? d.bloques[0].bloque : null; pintarAvance(); })
+    .catch(function(e){ $('bitacora').innerHTML = '<p class="hint">Error: ' + esc(e.message) + '</p>'; });
+}
+function pintarAvance(){
+  var d = AV;
+  $('kGlobal').textContent = d.global + '%';
+  $('kCortes').textContent = d.terminados + ' / ' + d.totalCortes;
+  $('kReg').textContent = d.registros;
+  $('kUlt').textContent = d.bitacora.length ? fechaBonita(d.bitacora[0].fecha) : '–';
+  /* línea global */
+  if (chLinea) chLinea.destroy();
+  chLinea = new Chart($('chLinea'), {
+    type: 'line',
+    data: { labels: d.timeline.map(function(t){ return fechaBonita(t.fecha); }),
+            datasets: [{ label: 'Avance global', data: d.timeline.map(function(t){ return t.global; }), borderColor: '#2f5d8a', backgroundColor: 'rgba(47,93,138,.12)', fill: true, tension: .25, pointRadius: 5, pointHoverRadius: 7 }] },
+    options: { maintainAspectRatio: false, scales: { y: { min: 0, max: 100, ticks: { callback: function(v){ return v + '%'; } } } },
+      plugins: { legend: { display: false }, tooltip: { callbacks: {
+        label: function(c){ return 'Global: ' + c.parsed.y + '%'; },
+        afterBody: function(items){ var t = d.timeline[items[0].dataIndex]; return t.items.slice(0, 12).map(function(x){ return '• ' + x.n + ' — ' + x.b + ' · Corte ' + x.c + ' · ' + x.e + ': ' + x.p + '%'; }).concat(t.items.length > 12 ? ['… y ' + (t.items.length - 12) + ' más'] : []); }
+      } } } }
+  });
+  /* chips de bloque */
+  $('chipsB').innerHTML = d.bloques.length ? d.bloques.map(function(b){ return '<button class="chip' + (b.bloque === BSEL ? ' on' : '') + '" data-b="' + esc(b.bloque) + '">' + esc(b.bloque) + ' · ' + b.total + '%</button>'; }).join('')
+    : '<span class="hint">Aún no hay cortes. El coordinador puede definirlos en la pestaña Coordinador, o se crean solos con el primer registro.</span>';
+  $('chipsB').querySelectorAll('.chip').forEach(function(c){ c.onclick = function(){ BSEL = c.dataset.b; pintarAvance(); }; });
+  var b = d.bloques.filter(function(x){ return x.bloque === BSEL; })[0];
+  if (chBar) chBar.destroy();
+  if (b) {
+    var n = d.etapas.length || 1;
+    $('chBarWrap').style.height = Math.max(240, b.cortes.length * 26 + 80) + 'px';
+    chBar = new Chart($('chBar'), {
+      type: 'bar',
+      data: { labels: b.cortes.map(function(c){ return 'Corte ' + c.corte; }),
+              datasets: d.etapas.map(function(e, i){ return { label: e.etapa, backgroundColor: colorEtapa(i),
+                data: b.cortes.map(function(c){ var x = c.etapas[e.etapa]; return x ? x.p / n : 0; }) }; }) },
+      options: { indexAxis: 'y', maintainAspectRatio: false,
+        scales: { x: { stacked: true, min: 0, max: 100, ticks: { callback: function(v){ return v + '%'; } } }, y: { stacked: true } },
+        plugins: { tooltip: { callbacks: { label: function(c){ var corte = b.cortes[c.dataIndex], e = d.etapas[c.datasetIndex], x = corte.etapas[e.etapa];
+          return e.etapa + ': ' + (x ? x.p + '% · ' + x.n + ' · ' + fechaBonita(x.f) : 'sin avance'); },
+          footer: function(items){ return 'Total corte: ' + b.cortes[items[0].dataIndex].total + '%'; } } } } }
+    });
+    $('matriz').innerHTML = '<tr><th>Corte</th>' + d.etapas.map(function(e){ return '<th>' + esc(e.etapa) + '</th>'; }).join('') + '<th>Total</th></tr>' +
+      b.cortes.map(function(c){
+        return '<tr><td><b>Corte ' + esc(c.corte) + '</b></td>' + d.etapas.map(function(e){
+          var x = c.etapas[e.etapa]; if (!x) return '<td class="c" style="background:#f4f6f9;color:#9aa4b2">—</td>';
+          var a = 0.15 + 0.85 * x.p / 100;
+          return '<td class="c" style="background:rgba(31,138,112,' + a + ');color:' + (x.p > 55 ? '#fff' : '#16202c') + '"><b>' + x.p + '%</b><small>' + esc(x.n.split(' ')[0]) + ' · ' + fechaBonita(x.f).slice(0,5) + '</small></td>';
+        }).join('') + '<td><div class="pbar"><i style="width:' + c.total + '%"></i></div>' + c.total + '%</td></tr>';
+      }).join('');
+  } else { $('matriz').innerHTML = ''; }
+  /* bitácora */
+  var porDia = {};
+  d.bitacora.forEach(function(r){ (porDia[r.fecha] = porDia[r.fecha] || []).push(r); });
+  var etIdx = {}; d.etapas.forEach(function(e, i){ etIdx[e.etapa] = i; });
+  $('bitacora').innerHTML = Object.keys(porDia).length ? Object.keys(porDia).sort().reverse().map(function(f){
+    return '<div class="day"><h4>' + fechaBonita(f) + '</h4>' + porDia[f].map(function(r){
+      return '<div><span class="pill" style="background:' + colorEtapa(etIdx[r.etapa] || 0) + '">' + esc(r.etapa) + '</span><b>' + esc(r.nombre) + '</b> — ' + esc(r.bloque) + ' · Corte ' + esc(r.corte) + ' — <b>' + r.pct + '%</b>' + (r.desc ? ' <span class="hint">· ' + esc(r.desc) + '</span>' : '') + (r.foto ? ' · <a href="' + esc(r.foto) + '" target="_blank">foto</a>' : '') + '</div>';
+    }).join('') + '</div>';
+  }).join('') : '<p class="hint">Sin registros todavía.</p>';
+}
+
+/* ---------- flujo ---------- */
+function pintarFlujo(){
+  var fl = INIT.flujo;
+  $('flow').style.gridTemplateColumns = 'repeat(' + Math.min(fl.length, 6) + ',1fr)';
+  $('flow').innerHTML = fl.map(function(e, i){
+    return '<div class="st" style="--c:' + colorEtapa(i) + '"><div class="n">PASO ' + (i + 1) + (e.mide ? '' : ' · sin % ') + '</div><div class="t">' + esc(e.etapa) + '</div>' +
+      '<div class="w"><b>Quién:</b> ' + esc(e.responsables) + '</div><div class="w"><b>Programa:</b> ' + esc(e.programa) + '</div>' +
+      '<div class="w"><b>Entrega:</b> ' + esc(e.entrega) + '</div>' + (e.clave ? '<div class="w"><b>Clave:</b> ' + esc(e.clave) + '</div>' : '') + '</div>';
+  }).join('');
+}
+
+/* ---------- equipo ---------- */
+function cargarEquipo(){
+  $('eqlinks').innerHTML = '<a href="' + esc(INIT.hoja) + '" target="_blank">Hoja de control</a> · <a href="' + esc(INIT.raiz) + '" target="_blank">Carpeta del proyecto en Drive</a>';
+  apiGet('equipo').then(function(ps){
+    $('teq').innerHTML = '<tr><th>Integrante</th><th>Equipo</th><th>Rol</th><th>Registros</th><th>Último avance</th><th>Última fecha</th><th></th></tr>' + (ps.length ? ps.map(function(p){
+      return '<tr><td><b>' + esc(p.nombre) + '</b></td><td>' + esc(p.equipo) + '</td><td>' + esc(p.rol || '—') + '</td><td>' + p.registros + '</td><td>' + (p.avance === '' ? '—' : '<div class="pbar"><i style="width:' + p.avance + '%"></i></div>' + p.avance + '%') + '</td><td>' + esc(fechaBonita(p.fecha) || '—') + '</td><td><a href="' + esc(p.carpeta) + '" target="_blank">Carpeta</a></td></tr>';
+    }).join('') : '<tr><td colspan="7">Aún no hay integrantes. Agrégalos abajo o se crean solos con su primer registro.</td></tr>');
+  }).catch(function(e){ $('teq').innerHTML = '<tr><td>Error: ' + esc(e.message) + '</td></tr>'; });
+}
+$('btnAdd').onclick = function(){
+  var n = $('nNombre').value.trim();
+  if (clave(n).split(' ').length < 2) return msg('msgAdd', 'Escribe nombre y apellido.', 'err');
+  if (!$('nEquipo').value.trim()) return msg('msgAdd', 'Indica el equipo.', 'err');
+  this.disabled = true; var btn = this;
+  apiPost('agregarPersona', {nombre: n, equipo: $('nEquipo').value.trim(), rol: $('nRol').value.trim()}).then(function(r){
+    msg('msgAdd', r.nuevo ? '<b>' + esc(r.nombre) + '</b> agregado. <a href="' + esc(r.carpeta) + '" target="_blank">Ver su carpeta</a>' : esc(r.nombre) + ' ya estaba en el equipo.', 'ok');
+    $('nNombre').value = ''; $('nRol').value = ''; cargarInit(); cargarEquipo();
+  }).catch(function(e){ msg('msgAdd', esc(e.message), 'err'); }).finally(function(){ btn.disabled = false; });
+};
+
+/* ---------- coordinador ---------- */
+$('btnClave').onclick = function(){
+  var c = $('clave').value;
+  apiPost('verificarClave', {clave: c}).then(function(){ CLAVE = c; $('lockBox').classList.add('hidden'); $('admin').classList.remove('hidden'); pintarResCortes(); })
+    .catch(function(e){ msg('msgClave', esc(e.message), 'err'); });
+};
+$('clave').addEventListener('keydown', function(e){ if (e.key === 'Enter') $('btnClave').click(); });
+$('btnBruto').onclick = async function(){
+  if (!$('bBloque').value.trim()) return msg('msgB', 'Indica el bloque.', 'err');
+  if (!BRUTOS.length) return msg('msgB', 'Elige al menos un archivo.', 'err');
+  var btn = this; btn.disabled = true;
+  try {
+    for (var i = 0; i < BRUTOS.length; i++) {
+      msg('msgB', 'Subiendo ' + (i + 1) + ' de ' + BRUTOS.length + ': ' + esc(BRUTOS[i].name) + ' (' + mb(BRUTOS[i].size) + '). No cierres la página.', 'info');
+      await subir(BRUTOS[i], {clave: CLAVE, bloque: $('bBloque').value, corte: $('bCorte').value}, $('r' + i), 'iniciarSubidaBruta');
+    }
+    msg('msgB', '<b>Listo.</b> ' + BRUTOS.length + ' archivo(s) en el Drive. El equipo ya puede descargarlos.', 'ok');
+    BRUTOS = []; pintarLista(BRUTOS, 'listaB', 'r'); cargarInit();
+  } catch (e) { msg('msgB', esc(e.message), 'err'); }
+  btn.disabled = false;
+};
+function pintarResCortes(){
+  var ks = Object.keys(INIT.cortes).sort();
+  $('resCortes').innerHTML = ks.length ? '<b>Cortes definidos:</b><br>' + ks.map(function(b){ return esc(b) + ': ' + INIT.cortes[b].length + ' cortes (' + esc(INIT.cortes[b].slice(0, 30).join(', ')) + (INIT.cortes[b].length > 30 ? '…' : '') + ')'; }).join('<br>') : 'Aún no hay cortes definidos.';
+}
+$('btnCortes').onclick = function(){
+  if (!$('cBloque').value.trim()) return msg('msgC', 'Indica el bloque.', 'err');
+  if (!$('cCant').value && !$('cLista').value.trim()) return msg('msgC', 'Indica la cantidad o la lista de cortes.', 'err');
+  var btn = this; btn.disabled = true;
+  apiPost('guardarCortes', {clave: CLAVE, bloque: $('cBloque').value, cantidad: $('cCant').value, lista: $('cLista').value.trim()}).then(function(r){
+    msg('msgC', '<b>' + esc(r.bloque) + '</b>: ' + r.agregados + ' cortes nuevos (total ' + r.cortes.length + ').', 'ok');
+    return cargarInit();
+  }).then(pintarResCortes).catch(function(e){ msg('msgC', esc(e.message), 'err'); }).finally(function(){ btn.disabled = false; });
+};
+var EDIT = [];
+function pintarEditorFlujo(){
+  if (!EDIT.length || !EDIT.dirty) EDIT = INIT.flujo.map(function(e){ return Object.assign({}, e); });
+  var campos = [['etapa','Etapa'],['codigo','Cód.'],['responsables','Responsables'],['programa','Programa'],['entrega','Entrega'],['clave','Clave de calidad']];
+  $('tFlujo').innerHTML = '<tr><th>#</th>' + campos.map(function(c){ return '<th>' + c[1] + '</th>'; }).join('') + '<th>Mide avance</th><th></th></tr>' +
+    EDIT.map(function(e, i){
+      return '<tr><td>' + (i + 1) + '</td>' + campos.map(function(c){ return '<td><input type="text" data-i="' + i + '" data-k="' + c[0] + '" value="' + esc(e[c[0]]) + '"' + (c[0] === 'codigo' ? ' style="width:60px"' : '') + '></td>'; }).join('') +
+        '<td style="text-align:center"><input type="checkbox" data-i="' + i + '" data-k="mide"' + (e.mide ? ' checked' : '') + '></td>' +
+        '<td style="white-space:nowrap"><button class="btn sec sm" data-up="' + i + '">↑</button> <button class="btn sec sm" data-del="' + i + '">✕</button></td></tr>';
+    }).join('');
+  $('tFlujo').querySelectorAll('input').forEach(function(inp){ inp.oninput = inp.onchange = function(){ EDIT.dirty = true; EDIT[+inp.dataset.i][inp.dataset.k] = inp.type === 'checkbox' ? inp.checked : inp.value; }; });
+  $('tFlujo').querySelectorAll('[data-up]').forEach(function(b){ b.onclick = function(){ var i = +b.dataset.up; if (i > 0) { var t = EDIT[i - 1]; EDIT[i - 1] = EDIT[i]; EDIT[i] = t; EDIT.dirty = true; pintarEditorFlujo(); } }; });
+  $('tFlujo').querySelectorAll('[data-del]').forEach(function(b){ b.onclick = function(){ EDIT.splice(+b.dataset.del, 1); EDIT.dirty = true; pintarEditorFlujo(); }; });
+}
+$('btnFila').onclick = function(){ EDIT.push({etapa:'', codigo:'', responsables:'', programa:'', entrega:'', clave:'', mide:true}); EDIT.dirty = true; pintarEditorFlujo(); };
+$('btnFlujo').onclick = function(){
+  var btn = this; btn.disabled = true;
+  apiPost('guardarFlujo', {clave: CLAVE, flujo: EDIT}).then(function(fl){
+    EDIT = []; INIT.flujo = fl; poblar(); msg('msgF', '<b>Flujo guardado.</b> Ya se ve en la pestaña Flujo de trabajo y en la hoja "Flujo" del Drive.', 'ok');
+  }).catch(function(e){ msg('msgF', esc(e.message), 'err'); }).finally(function(){ btn.disabled = false; });
+};
+</script>
+</body>
+</html>
