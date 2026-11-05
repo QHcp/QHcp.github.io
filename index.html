@@ -91,7 +91,7 @@ code{font-family:Consolas,Menlo,monospace;font-size:12.5px;background:#eef1f5;pa
   <div class="brand"><h1>cloud point-QH</h1><span>Quinta Heeren · Nube de puntos → ortofotos georreferenciadas</span></div>
   <nav>
     <button class="on" data-s="diario">Diario de avance</button>
-    <button data-s="avance">Avance</button>
+    <button data-s="progreso">Avance</button>
     <button data-s="flujo">Flujo de trabajo</button>
     <button data-s="equipo">Equipo</button>
     <button data-s="coord">Coordinador 🔒</button>
@@ -165,7 +165,7 @@ code{font-family:Consolas,Menlo,monospace;font-size:12.5px;background:#eef1f5;pa
 </section>
 
 <!-- ================= AVANCE ================= -->
-<section id="avance">
+<section id="progreso">
   <div class="kpis">
     <div class="kpi"><b id="kGlobal">–</b><span>Avance global</span></div>
     <div class="kpi"><b id="kCortes">–</b><span>Cortes terminados</span></div>
@@ -309,7 +309,7 @@ document.querySelectorAll('nav button').forEach(function(b){
     document.querySelectorAll('nav button').forEach(function(x){ x.classList.remove('on'); });
     document.querySelectorAll('section').forEach(function(x){ x.classList.remove('on'); });
     b.classList.add('on'); $(b.dataset.s).classList.add('on');
-    if (b.dataset.s === 'avance') cargarAvance();
+    if (b.dataset.s === 'progreso') cargarAvance();
     if (b.dataset.s === 'equipo') cargarEquipo();
   };
 });
