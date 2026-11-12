@@ -192,40 +192,50 @@ code{font-family:Consolas,Menlo,monospace;font-size:12.5px;background:#eef1f5;pa
   </div>
 </section>
 
-<!-- ================= CRONOGRAMA ================= --> <section id="crono"><style>.crLey{display:inline-block;width:12px;height:12px;border-radius:3px;margin:0 4px 0 10px;vertical-align:-1px}
-.mpWrap{display:flex;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:#fff}
-.mpL{flex:0 0 auto;border-right:2px solid #aeb5bf;overflow-x:auto;max-width:60%}
-.mpT{border-collapse:collapse;font-size:11.5px;white-space:nowrap}
-.mpT th{height:46px;background:#dfe4ea;font-weight:700;padding:0 6px;text-align:center;font-size:11px;box-shadow:inset -1px -1px #c9ced6;box-sizing:border-box}
-.mpT td{height:24px;padding:0 6px;box-shadow:inset 0 -1px #eef0f3,inset -1px 0 #eef0f3;box-sizing:border-box;text-align:center;color:#374151}
-.mpT td:nth-child(3){text-align:left;max-width:330px;overflow:hidden;text-overflow:ellipsis}
-.mpT tr.mpS td{background:#f4f6f9;color:#1d2430;font-weight:600}
-.mpTg{cursor:pointer;color:#2f5d8a;display:inline-block;width:12px;font-size:12px}
+<!-- ================= CRONOGRAMA ================= --> <section id="crono"><style>main:has(#crono.on){max-width:1760px}
+.crLey{display:inline-block;width:12px;height:12px;border-radius:3px;margin:0 4px 0 10px;vertical-align:-1px}
+.crBan{background:#eef4fb;border:1px solid #cfe0f3;border-left:5px solid #2f5d8a;border-radius:10px;padding:12px 16px;margin:0 0 14px;font-size:15px;line-height:1.7}
+.crTag{display:inline-block;color:#fff;border-radius:6px;padding:1px 9px;font-weight:700;font-size:14px}
+.crBar2{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:12px}
+.crBar2 select{width:auto;padding:6px 10px}
+#crono .kpi b{font-size:26px}
+.mpWrap{display:flex;border:1px solid #c9ced6;border-radius:10px;overflow:hidden;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+.mpL{flex:0 0 auto;border-right:2px solid #8f98a5;overflow-x:auto;max-width:46%}
+.mpT{border-collapse:collapse;font-size:12.5px;white-space:nowrap}
+.mpT th{height:46px;background:#1d2430;color:#fff;font-weight:700;padding:0 8px;text-align:center;font-size:12px;box-shadow:inset -1px 0 #3a4352;box-sizing:border-box}
+.mpT td{height:30px;padding:0 8px;box-shadow:inset 0 -1px #eef0f3,inset -1px 0 #eef0f3;box-sizing:border-box;text-align:center;color:#374151}
+.mpT td:nth-child(3){text-align:left;max-width:300px;overflow:hidden;text-overflow:ellipsis}
+.mpT tr.mpS td{background:#f2f5f9;color:#111827;font-weight:600;font-size:13px}
+.mpT tr:hover td{background:#fff8e1}
+.mpTg{cursor:pointer;color:#2f5d8a;display:inline-block;width:14px;font-size:13px}
 .mpScroll{flex:1 1 auto;overflow-x:auto}
 .mpR{position:relative}
-.mpHead{position:relative;height:46px;background:#dfe4ea}
-.mpH1,.mpH2{position:relative}.mpH1{height:22px}.mpH2{height:24px}
-.mpW{position:absolute;top:0;height:22px;line-height:22px;font-size:11px;font-weight:700;padding-left:4px;box-shadow:inset 1px 0 #b9c0c9,inset 0 -1px #c9ced6;box-sizing:border-box;white-space:nowrap}
-.mpD{position:absolute;top:0;width:22px;height:24px;line-height:24px;text-align:center;font-size:10px;color:#374151;box-shadow:inset 1px 0 #d5d9df,inset 0 -1px #c9ced6}
-.mpD.no{background:#cfd4da}.mpD.hoy{background:#ffe08a;font-weight:700}
+.mpHead{position:relative;height:46px;background:#1d2430;color:#fff}
+.mpH1,.mpH2{position:relative}.mpH1{height:18px}.mpH2{height:28px}
+.mpW{position:absolute;top:0;height:18px;line-height:18px;font-size:11px;font-weight:700;padding-left:5px;box-shadow:inset 1px 0 #4b5563;box-sizing:border-box;white-space:nowrap;overflow:hidden}
+.mpD{position:absolute;top:0;height:28px;line-height:12px;padding-top:2px;text-align:center;font-size:10px;font-weight:700;color:#e5e7eb;box-shadow:inset 1px 0 #374151;box-sizing:border-box}
+.mpD small{font-weight:400;font-size:9px;color:#9ca3af}
+.mpD.no{background:#374151;color:#9ca3af}.mpD.hoy{background:#e0a100;color:#1d2430}.mpD.hoy small{color:#1d2430}
 .mpBody{position:relative}
-.mpNo{position:absolute;top:0;bottom:0;width:22px;background:#eceff3}
-.mpRow{position:absolute;left:0;right:0;height:24px;box-shadow:inset 0 -1px #eef0f3}.mpRow.s{background:rgba(29,36,48,.03)}
-.mpSum{position:absolute;height:6px;background:#1d2430;z-index:3}
-.mpSum:before,.mpSum:after{content:"";position:absolute;top:0;border-top:8px solid #1d2430;border-left:4px solid transparent;border-right:4px solid transparent}
-.mpSum:before{left:-4px}.mpSum:after{right:-4px}
-.mpSum.ok{background:#1f8a70}.mpSum.ok:before,.mpSum.ok:after{border-top-color:#1f8a70}
-.mpMil{position:absolute;width:10px;height:10px;background:#1d2430;transform:rotate(45deg);z-index:4}.mpMil.ok{background:#1f8a70}
-.mpBar{position:absolute;height:12px;background:#4f81bd;border:1px solid #3a6ea5;border-radius:2px;box-sizing:border-box;z-index:3}
-.mpLbl{position:absolute;font-size:10.5px;white-space:nowrap;color:#374151;z-index:3}
+.mpNo{position:absolute;top:0;bottom:0;background:#eceff3}
+.mpHoyCol{position:absolute;top:0;bottom:0;background:rgba(224,161,0,.12)}
+.mpRow{position:absolute;left:0;right:0;height:30px;box-shadow:inset 0 -1px #eef0f3}.mpRow.s{background:rgba(29,36,48,.035)}
+.mpSum{position:absolute;height:8px;background:var(--c,#1d2430);z-index:3;border-radius:1px}
+.mpSum:before,.mpSum:after{content:"";position:absolute;top:0;border-top:10px solid var(--c,#1d2430);border-left:5px solid transparent;border-right:5px solid transparent}
+.mpSum:before{left:-5px}.mpSum:after{right:-5px}
+.mpMil{position:absolute;width:12px;height:12px;background:var(--c,#1d2430);transform:rotate(45deg);z-index:4;box-shadow:0 0 0 2px #fff}
+.mpBar{position:absolute;height:14px;background:#4f81bd;border:1px solid #3a6ea5;border-radius:3px;box-sizing:border-box;z-index:3}.mpBar.ok{background:#6fbf9f;border-color:#3f9f7b}
+.mpLbl{position:absolute;font-size:11.5px;white-space:nowrap;color:#4b5563;z-index:3;line-height:16px}.mpLbl.b{font-weight:700}
 .mpLinks{position:absolute;left:0;top:0;pointer-events:none;z-index:2}
 .mpHoy{position:absolute;top:0;bottom:0;border-left:2px dashed #e0a100;z-index:1}
-.mpMeta{position:absolute;top:0;bottom:0;border-left:2px solid #b23a3a;z-index:1}.mpMeta span{position:absolute;top:2px;left:3px;font-size:10px;color:#b23a3a;font-weight:700}
-.mpRec{position:relative;height:42px;border-top:2px solid #aeb5bf;background:#fafbfc}
-.mpRb{position:absolute;bottom:2px;width:16px;background:#7fa7d6;border-radius:2px 2px 0 0}.mpRb.x{background:#e07b7b}
-.mpRb span{position:absolute;top:-12px;left:-3px;width:22px;text-align:center;font-size:8.5px;color:#374151}
-.mpRecL{height:42px;line-height:42px;border-top:2px solid #aeb5bf;font-size:11px;font-weight:700;padding-left:8px;background:#fafbfc}
-</style><div class="card"><h2>Cronograma de entregas</h2><p class="sub">Programado como en MS Project. La duración de cada bloque se calcula por su <b>área (m²)</b> con el ritmo real del bloque de referencia (el B5: 3 días con todo el equipo; el ritmo usa <b id="crDias">3</b> días). Cada bloque incluye limpieza, plantas, cortes, elevaciones, post-procesamiento a AutoCAD y entrega; no incluye pedidos ni modificaciones adicionales. Se trabaja de lunes a viernes, sin feriados. El orden es hipotético: se mueve por prioridad cambiando las predecesoras.</p><div class="xbar"><button class="btn sm" type="button" id="crXls">⬇ Descargar en Excel</button><button class="btn sec sm" type="button" id="crTodo">▾ Expandir todo</button><span class="msg" id="crXMsg" style="margin:0"></span></div><div class="kpis" id="crKpis"></div><div id="crVista"><p class="hint">Cargando cronograma…</p></div></div><div class="card"><h2>Modificar el cronograma 🔒</h2><div id="crEdit"></div></div></section>
+.mpMeta{position:absolute;top:0;bottom:0;border-left:3px solid #b23a3a;z-index:1}.mpMeta span{position:absolute;top:3px;left:4px;font-size:11px;color:#fff;background:#b23a3a;border-radius:4px;padding:0 5px;font-weight:700}
+.mpRec{position:relative;height:46px;border-top:2px solid #8f98a5;background:#fafbfc}
+.mpRb{position:absolute;bottom:2px;background:#7fa7d6;border-radius:2px 2px 0 0}.mpRb.x{background:#e07b7b}
+.mpRb span{position:absolute;top:-13px;left:-6px;right:-6px;text-align:center;font-size:9px;color:#374151}
+.mpRecL{height:46px;line-height:46px;border-top:2px solid #8f98a5;font-size:12px;font-weight:700;padding-left:10px;background:#fafbfc}
+#crVista:fullscreen,#crCard:fullscreen{background:#fff;padding:16px;overflow:auto}
+@media(max-width:900px){.mpT th:nth-child(1),.mpT td:nth-child(1),.mpT th:nth-child(7),.mpT td:nth-child(7),.mpT th:nth-child(8),.mpT td:nth-child(8),.mpT th:nth-child(2),.mpT td:nth-child(2){display:none}.mpT td:nth-child(3){max-width:120px}.mpL{max-width:48%}.crBan{font-size:13.5px}#crono .kpi b{font-size:19px}}
+</style><div class="card" id="crCard"><h2>Cronograma de entregas</h2><p class="sub">Programado como en MS Project. La duración de cada bloque se calcula por su <b>área (m²)</b> con el ritmo real del bloque de referencia (el B5: 3 días con todo el equipo; el ritmo usa <b id="crDias">3</b> días). Cada bloque incluye limpieza, plantas, cortes, elevaciones, post-procesamiento a AutoCAD y entrega; no incluye pedidos ni modificaciones adicionales. Se trabaja de lunes a viernes, sin feriados. El orden es hipotético: se mueve por prioridad cambiando las predecesoras.</p><div class="crBar2"><button class="btn sm" type="button" id="crXls">⬇ Descargar en Excel</button><button class="btn sec sm" type="button" id="crTodo">▾ Expandir todo</button><label style="margin:0;font-weight:400">Vista: <select id="crZoom"><option value="amplio">Días grandes</option><option value="normal">Normal</option><option value="compacto">Todo el periodo</option></select></label><button class="btn sec sm" type="button" id="crFull">⛶ Pantalla completa</button><span class="msg" id="crXMsg" style="margin:0"></span></div><div class="kpis" id="crKpis"></div><div id="crVista"><p class="hint">Cargando cronograma…</p></div></div><div class="card"><h2>Modificar el cronograma 🔒</h2><div id="crEdit"></div></div></section>
 <!-- ================= EXPLORADOR ================= --> <section id="explorador"> <div class="card"> <h2>Archivos del Drive (en vivo)</h2> <p class="sub">Navega las carpetas del proyecto sin salir de la web. Todos pueden subir archivos (también carpetas completas), descargar y crear carpetas en cualquier carpeta del proyecto, sin contraseña. Para eliminar hay que iniciar sesión con la contraseña en la barra de arriba (en tu dispositivo se recuerda). Lo eliminado va a la papelera del Drive (se recupera hasta 30 días).</p> <div class="chips" id="xAccesos"></div> <div class="ruta" id="xRuta"></div> <div class="xbar"> <button class="btn sec sm" id="xAtras" type="button">← Atrás</button> <button class="btn sm" id="xSubirBtn" type="button">⬆ Subir archivos</button> <button class="btn sm" id="xCarpBtn" type="button">📁 Subir carpeta</button> <button class="btn sec sm" id="xDescargar" type="button">⬇ Descargar seleccionados</button> <input type="text" id="xNombreCarpeta" placeholder="Nombre de carpeta nueva"> <button class="btn sec sm" id="xNueva" type="button">+ Crear carpeta</button> <button class="btn sec sm" id="xRefrescar" type="button">↻ Actualizar</button> <button class="btn sm danger" id="xEliminar" type="button">🗑 Eliminar seleccionados (0)</button> <input type="hidden" id="xClave"> <input type="hidden" id="xClaveDel"> <input type="file" id="xFile" multiple class="hidden"> <input type="file" id="xDir" webkitdirectory multiple class="hidden"> </div> <div class="drop" id="xDrop">Arrastra aquí archivos o carpetas enteras para subirlos a la carpeta abierta. Los archivos pesados (1 a 5 GB) se suben por partes: si se corta el wifi, la subida espera y sigue sola; si cierras la página, vuelve a soltar el mismo archivo y continúa donde se quedó.</div> <div class="files" id="xLista"></div> <div class="msg" id="xMsg"></div> <div style="overflow-x:auto;margin-top:12px"><table class="xt" id="xTabla"></table></div> </div> </section> <!-- ================= FLUJO ================= -->
 <section id="flujo">
   <div class="card">
@@ -345,7 +355,7 @@ document.querySelectorAll('nav button').forEach(function(b){
     document.querySelectorAll('nav button').forEach(function(x){ x.classList.remove('on'); });
     document.querySelectorAll('section').forEach(function(x){ x.classList.remove('on'); });
     b.classList.add('on'); $(b.dataset.s).classList.add('on');
-    if (b.dataset.s === 'progreso') cargarAvance(); if (b.dataset.s === 'crono') crCargar(); $('crXls').onclick = crExcel; $('crTodo').onclick = function(){ CR_TODO = !CR_TODO; if (!CR_TODO) CR_ABIERTO = {}; crPintar(); };
+    if (b.dataset.s === 'progreso') cargarAvance(); if (b.dataset.s === 'crono') crCargar(); $('crXls').onclick = crExcel; $('crTodo').onclick = function(){ CR_TODO = !CR_TODO; if (!CR_TODO) CR_ABIERTO = {}; crPintar(); }; $('crZoom').value = CR_ZOOM; $('crZoom').onchange = function(){ CR_ZOOM = this.value; try { localStorage.setItem('crZoom', CR_ZOOM); } catch (e) {} crPintar(); }; $('crFull').onclick = function(){ var el = $('crCard'); if (document.fullscreenElement) document.exitFullscreen(); else if (el.requestFullscreen) el.requestFullscreen(); };
     if (b.dataset.s === 'integrantes') cargarEquipo(); if (b.dataset.s === 'explorador') abrir(XACT ? XACT.id : (INIT.carpetas || {}).planos || (INIT.carpetas || {}).raiz);
   };
 });
@@ -553,7 +563,10 @@ var CRONO = null, CRB = null, CR_ABIERTO = {}, CR_TODO = false, CR_SCH = null;
 var CR_FASES = [['Limpieza de nube', 1], ['Plantas', .5], ['Cortes', .5], ['Elevaciones', .4], ['Post-procesamiento a AutoCAD', .4], ['Revisión y entrega', .2]];
 var CR_DSEM = ['D', 'L', 'M', 'X', 'J', 'V', 'S'], CR_DNOM = ['dom', 'lun', 'mar', 'mié', 'jue', 'vie', 'sáb'];
 var CR_MES = ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'set', 'oct', 'nov', 'dic'];
-var CR_W = 22, CR_H = 24;
+var CR_W = 24, CR_H = 30, CR_ZOOM = 'normal';
+try { CR_ZOOM = localStorage.getItem('crZoom') || 'normal'; } catch (e) {}
+function crW(){ return {amplio: 34, normal: 24, compacto: 14}[CR_ZOOM] || 24; }
+var CR_COLEST = {'Entregado': '#1f8a70', 'Atrasado': '#b23a3a', 'En proceso': '#2f5d8a', 'Programado': '#1d2430'};
 var CR_AREAS = {'B1A': 3463.52, 'B1B': 2104.19, 'B2': 773.5, 'B3': 71.31, 'B4': 528.2, 'B5': 1176.59, 'B6': 445.64, 'B7': 258.91, 'B8': 272.63, 'B9': 536.82, 'B10': 1384.89, 'B11': 26.93, 'B12': 878.27, 'B13': 267.77};
 function crD(s){ var p = String(s).split('-'); return new Date(Date.UTC(+p[0], +p[1] - 1, +p[2])); }
 function crS(d){ return d.toISOString().slice(0, 10); }
@@ -613,7 +626,7 @@ function crHolgura(S, f, meta){ if (!meta) return null; return f <= meta ? S.WD.
 function crPintar(c){
   c = c || CRB || CRONO; var box = $('crVista'); if (!box) return;
   if (!c || !c.base) { box.innerHTML = '<p class="hint">Aún no se ha armado el cronograma.</p>'; $('crKpis').innerHTML = ''; return; }
-  var S = crCalcular(c), hoy = crHoy(); CR_SCH = S;
+  var S = crCalcular(c), hoy = crHoy(); CR_SCH = S; CR_W = crW();
   $('crDias').textContent = crNum(S.dias, 2);
   var hol = crHolgura(S, S.fin, c.meta);
   var ent = S.filas.filter(function(r){ return r.b.entregado; }).length, proc = S.filas.filter(function(r){ return !r.b.entregado && hoy >= r.ini && hoy <= r.fin; });
@@ -621,6 +634,8 @@ function crPintar(c){
     '<div class="kpi"><b style="color:' + (hol === null ? 'inherit' : hol >= 0 ? '#1f8a70' : '#b23a3a') + '">' + (hol === null ? '—' : Math.abs(hol) + ' días') + '</b><span>' + (hol !== null && hol < 0 ? 'de ATRASO respecto a la meta' : 'de holgura antes de la meta') + '</span></div>' +
     '<div class="kpi"><b>' + crNum(S.rEq, 0) + ' m²/día</b><span>Ritmo del equipo, según ' + crNombre(c.base.b) + ' (' + crNum(S.refArea, 2) + ' m² en ' + crNum(S.dias, 2) + ' días con ' + S.pers + ' personas)</span></div>' +
     '<div class="kpi"><b>' + ent + ' / ' + S.filas.length + '</b><span>Bloques entregados' + (proc.length ? ' · en proceso: ' + proc.map(function(r){ return esc(r.b.b); }).join(', ') : '') + '</span></div>';
+  var enProc = S.filas.filter(function(r){ return !r.b.entregado && hoy >= r.ini && hoy <= r.fin; }), atras = S.filas.filter(function(r){ return !r.b.entregado && hoy > r.fin; }), prox = S.filas.filter(function(r){ return !r.b.entregado && r.ini > hoy; }).sort(function(a, b){ return a.ini < b.ini ? -1 : 1; })[0];
+  var ban = '<div class="crBan"><b>📍 Hoy ' + crFechaMP(hoy) + ':</b> ' + (enProc.length ? enProc.map(function(r){ var dd = S.WD.indexOf(hoy) - Math.floor(r.i0 + 1e-9) + 1; return '<span class="crTag" style="background:#2f5d8a">' + esc(crNombre(r.b.b)) + '</span> en proceso' + (dd > 0 ? ' (día ' + dd + ' de ' + Math.max(1, Math.ceil(r.dur - 1e-9)) + ')' : '') + ', entrega <b>' + crFechaMP(r.fin) + '</b>'; }).join(' · ') : 'ningún bloque en proceso') + (prox ? ' &nbsp;→&nbsp; Sigue <span class="crTag" style="background:#1d2430">' + esc(crNombre(prox.b.b)) + '</span> desde ' + crFechaMP(prox.ini) : '') + (atras.length ? ' &nbsp;·&nbsp; <b style="color:#b23a3a">⚠ Atrasado' + (atras.length > 1 ? 's' : '') + ': ' + atras.map(function(r){ return esc(r.b.b); }).join(', ') + '</b>' : '') + '</div>';
   var rows = [], id = 0;
   S.filas.forEach(function(r){ id++; r.idBlq = id; var abierto = CR_TODO || CR_ABIERTO[r.b.b]; rows.push({t: 'blq', r: r, id: id, abierto: abierto}); var ids = []; r.fases.forEach(function(f, k){ id++; if (abierto) rows.push({t: 'fase', r: r, f: f, k: k, id: id}); ids.push(id); }); r.ids = ids; });
   var c0 = S.ini; while (crD(c0).getUTCDay() !== 1) c0 = crMas(c0, -1);
@@ -629,7 +644,7 @@ function crPintar(c){
   function calX(f){ return crEntre(c0, f) * CR_W; }
   function posX(x, fin){ var k = Math.floor(x + 1e-9), fr = x - k; if (fin && fr < 1e-9 && x > 0) { k--; fr = 1; } if (fr < 0) fr = 0; k = Math.max(0, Math.min(S.WD.length - 1, k)); return calX(S.WD[k]) + fr * CR_W; }
   var predId = {}; S.filas.forEach(function(r){ predId[r.b.b] = r.idBlq; });
-  var L = '<table class="mpT"><thead><tr><th style="width:30px">Id</th><th style="width:16px" title="Estado"></th><th style="min-width:200px">Nombre de tarea</th><th style="width:74px">Duración</th><th style="width:88px">Comienzo</th><th style="width:88px">Fin</th><th style="width:74px">Predecesoras</th><th style="width:58px">Personas</th></tr></thead><tbody>';
+  var L = '<table class="mpT"><thead><tr><th style="width:30px">Id</th><th style="width:16px" title="Estado"></th><th style="min-width:200px">Nombre de tarea</th><th style="width:74px">Duración</th><th style="width:88px">Comienzo</th><th style="width:88px">Fin</th><th style="width:74px" class="mpOpt">Predecesoras</th><th style="width:56px" class="mpOpt">Personas</th></tr></thead><tbody>';
   rows.forEach(function(x){
     if (x.t === 'blq') { var r = x.r, e = crEstado(r, c, hoy);
       L += '<tr class="mpS"><td>' + x.id + '</td><td><span title="' + e[0] + '" style="display:inline-block;width:9px;height:9px;border-radius:50%;background:' + e[1] + '"></span></td><td><span class="mpTg" data-b="' + esc(r.b.b) + '">' + (x.abierto ? '▾' : '▸') + '</span> <b>' + esc(crNombre(r.b.b)) + '</b>' + (r.b.obs ? ' <small>· ' + esc(r.b.obs) + '</small>' : '') + (r.b.entregado ? ' <small style="color:#1f8a70">✓ ' + fechaBonita(r.b.entregado) + '</small>' : '') + '</td><td>' + crNum(r.dur, 2) + ' días</td><td>' + crFechaMP(r.ini) + '</td><td>' + crFechaMP(r.fin) + '</td><td>' + (r.b.inicio ? 'fijo' : (r.b.pred && predId[r.b.pred] ? predId[r.b.pred] + ' (' + esc(r.b.pred) + ')' : '')) + '</td><td>' + r.n + '</td></tr>'; }
@@ -638,16 +653,17 @@ function crPintar(c){
   L += '</tbody></table>';
   var hd1 = '', hd2 = '', fondo = '';
   for (var i = 0; i < nd; i += 7) { var dd = crMas(c0, i); hd1 += '<div class="mpW" style="left:' + i * CR_W + 'px;width:' + 7 * CR_W + 'px">' + (+dd.slice(8)) + ' ' + CR_MES[+dd.slice(5, 7) - 1] + " '" + dd.slice(2, 4) + '</div>'; }
-  for (i = 0; i < nd; i++) { var di = crMas(c0, i), lab = crLab(di, c); hd2 += '<div class="mpD' + (lab ? '' : ' no') + (di === hoy ? ' hoy' : '') + '" style="left:' + i * CR_W + 'px" title="' + crFechaMP(di) + ((c.feriados || []).indexOf(di) >= 0 ? ' · feriado' : '') + '">' + CR_DSEM[crD(di).getUTCDay()] + '</div>'; if (!lab) fondo += '<div class="mpNo" style="left:' + i * CR_W + 'px"></div>'; }
+  for (i = 0; i < nd; i++) { var di = crMas(c0, i), lab = crLab(di, c); hd2 += '<div class="mpD' + (lab ? '' : ' no') + (di === hoy ? ' hoy' : '') + '" style="left:' + i * CR_W + 'px;width:' + CR_W + 'px" title="' + crFechaMP(di) + ((c.feriados || []).indexOf(di) >= 0 ? ' · feriado' : '') + '">' + (CR_W >= 18 ? CR_DSEM[crD(di).getUTCDay()] + '<br><small>' + (+di.slice(8)) + '</small>' : '') + '</div>'; if (!lab) fondo += '<div class="mpNo" style="left:' + i * CR_W + 'px;width:' + CR_W + 'px"></div>'; if (di === hoy) fondo += '<div class="mpHoyCol" style="left:' + i * CR_W + 'px;width:' + CR_W + 'px"></div>'; }
   var bars = '', links = '', pos = {};
   rows.forEach(function(x, ri){ var yc = ri * CR_H + CR_H / 2;
     if (x.t === 'blq') { var r = x.r, a = posX(r.i0), b = posX(r.i1, true), ent = r.b.entregado;
-      bars += '<div class="mpSum' + (ent ? ' ok' : '') + '" style="left:' + a + 'px;top:' + (ri * CR_H + 7) + 'px;width:' + Math.max(3, b - a) + 'px" title="' + esc(crNombre(r.b.b)) + ': ' + crFechaMP(r.ini) + ' → ' + crFechaMP(r.fin) + ' (' + crNum(r.dur, 2) + ' días)"></div>';
-      bars += '<div class="mpMil' + (ent ? ' ok' : '') + '" style="left:' + (b - 5) + 'px;top:' + (ri * CR_H + 7) + 'px" title="Entrega ' + esc(r.b.b) + ': ' + crFechaMP(r.fin) + '"></div><div class="mpLbl" style="left:' + (b + 9) + 'px;top:' + (ri * CR_H + 5) + 'px">' + (ent ? '✓ ' : '') + 'Entrega ' + esc(r.b.b) + ' · ' + r.fin.slice(8) + '/' + r.fin.slice(5, 7) + '</div>';
+      var ce = CR_COLEST[crEstado(r, c, hoy)[0]] || '#1d2430';
+      bars += '<div class="mpSum" style="--c:' + ce + ';left:' + a + 'px;top:' + (ri * CR_H + CR_H / 2 - 4) + 'px;width:' + Math.max(3, b - a) + 'px" title="' + esc(crNombre(r.b.b)) + ': ' + crFechaMP(r.ini) + ' → ' + crFechaMP(r.fin) + ' (' + crNum(r.dur, 2) + ' días)"></div>';
+      bars += '<div class="mpMil" style="--c:' + ce + ';left:' + (b - 6) + 'px;top:' + (ri * CR_H + CR_H / 2 - 6) + 'px" title="Entrega ' + esc(r.b.b) + ': ' + crFechaMP(r.fin) + '"></div><div class="mpLbl b" style="left:' + (b + 10) + 'px;top:' + (ri * CR_H + CR_H / 2 - 8) + 'px;color:' + ce + '">' + (ent ? '✓ ' : '') + 'Entrega ' + esc(r.b.b) + ' · ' + r.fin.slice(8) + '/' + r.fin.slice(5, 7) + '</div>';
       pos[r.idBlq] = {a: a, b: b, y: yc};
     } else { var f = x.f, a2 = posX(f.i0), b2 = posX(f.i1, true);
-      bars += '<div class="mpBar" style="left:' + a2 + 'px;top:' + (ri * CR_H + 6) + 'px;width:' + Math.max(3, b2 - a2) + 'px" title="' + esc(f.n) + ' · ' + esc(x.r.b.b) + ': ' + crFechaMP(f.ini) + ' → ' + crFechaMP(f.fin) + '"></div>';
-      if (x.k === CR_FASES.length - 1) bars += '<div class="mpLbl" style="left:' + (b2 + 4) + 'px;top:' + (ri * CR_H + 5) + 'px">' + x.r.n + ' personas</div>';
+      bars += '<div class="mpBar' + (x.r.b.entregado ? ' ok' : '') + '" style="left:' + a2 + 'px;top:' + (ri * CR_H + CR_H / 2 - 7) + 'px;width:' + Math.max(3, b2 - a2) + 'px" title="' + esc(f.n) + ' · ' + esc(x.r.b.b) + ': ' + crFechaMP(f.ini) + ' → ' + crFechaMP(f.fin) + '"></div>';
+      if (x.k === CR_FASES.length - 1) bars += '<div class="mpLbl" style="left:' + (b2 + 5) + 'px;top:' + (ri * CR_H + CR_H / 2 - 8) + 'px">' + x.r.n + ' personas</div>';
       pos[x.id] = {a: a2, b: b2, y: yc};
     }
   });
@@ -665,9 +681,9 @@ function crPintar(c){
     (hoyX >= 0 ? '<div class="mpHoy" style="left:' + hoyX + 'px" title="Hoy"></div>' : '') + (metaX >= 0 ? '<div class="mpMeta" style="left:' + metaX + 'px"><span>Meta</span></div>' : '') +
     '<svg class="mpLinks" width="' + Wt + '" height="' + Ht + '"><defs><marker id="mpAr" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#6b7280"/></marker></defs><g fill="none" stroke="#6b7280" stroke-width="1" marker-end="url(#mpAr)">' + links + '</g></svg>' + bars + '</div>';
   var rec = '<div class="mpRec">';
-  for (i = 0; i < nd; i++) { var dx = crMas(c0, i), v = S.carga[dx] || 0; if (v > 0.01) rec += '<div class="mpRb' + (v > 6.01 ? ' x' : '') + '" style="left:' + (i * CR_W + 3) + 'px;height:' + Math.min(36, v / 6 * 28) + 'px" title="' + crFechaMP(dx) + ': ' + crNum(v, 1) + ' personas"><span>' + crNum(v, 1) + '</span></div>'; }
+  for (i = 0; i < nd; i++) { var dx = crMas(c0, i), v = S.carga[dx] || 0; if (v > 0.01) rec += '<div class="mpRb' + (v > 6.01 ? ' x' : '') + '" style="width:' + Math.max(4, CR_W - 6) + 'px;left:' + (i * CR_W + 3) + 'px;height:' + Math.min(36, v / 6 * 28) + 'px" title="' + crFechaMP(dx) + ': ' + crNum(v, 1) + ' personas"><span>' + crNum(v, 1) + '</span></div>'; }
   R += rec + '</div></div>';
-  box.innerHTML = '<div class="mpWrap"><div class="mpL">' + L + '<div class="mpRecL">Personas por día (máx. 6)</div></div><div class="mpScroll" id="mpScroll">' + R + '</div></div>' +
+  box.innerHTML = ban + '<div class="mpWrap"><div class="mpL">' + L + '<div class="mpRecL">Personas por día (máx. 6)</div></div><div class="mpScroll" id="mpScroll">' + R + '</div></div>' +
     '<p class="hint" style="margin-top:8px"><span class="crLey" style="background:#1d2430"></span>Bloque (tarea resumen) <span class="crLey" style="background:#4f81bd"></span>Partida <span class="crLey" style="background:#1d2430;transform:rotate(45deg);width:9px;height:9px"></span>Entrega (hito) <span class="crLey" style="background:#e4e7eb;border:1px solid #d5d9df"></span>Sábado, domingo o feriado <span class="crLey" style="background:#e0a100"></span>Hoy <span class="crLey" style="background:#b23a3a"></span>Meta. Las flechas son las predecesoras. Pulsa ▸ para ver las partidas de cada bloque.</p>';
   box.querySelectorAll('.mpTg').forEach(function(t){ t.onclick = function(){ var b = t.dataset.b; if (CR_TODO) { CR_TODO = false; S.filas.forEach(function(r){ CR_ABIERTO[r.b.b] = true; }); } CR_ABIERTO[b] = !CR_ABIERTO[b]; crPintar(); }; });
   var sc = $('mpScroll'); if (sc && hoyX > 0) sc.scrollLeft = Math.max(0, hoyX - 140);
